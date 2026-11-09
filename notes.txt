@@ -1,6 +1,18 @@
+Notes for discovery.py   
+    
     # rule of try: run the code, if an error occurs run the except
     # rule of except Error: only run if a specified error occurs
     # rule of finally: runs after try and except have run
     # rule of function returns: the value returned by the function, if any, after try, except, and finally have executed.
 
-Notes for discovery.py 
+stdin / stdout / stderr
+- stdin sends input into a command
+- stdout is the normal output
+- stderr is the error output
+
+Why a RejectPolicy exist
+The reason why a rejectpolicy exist because of potential threat actors and how someone can always intercept the connection.
+It can also be good for rejecting unknown host files since I have added AutoAddPolicy it can just blindly accept anything without fact checking.
+
+Why or {}
+The reason why the or {} are there because in discovery.py it will know to make an update to the server and that the data has been entered and to count it.
