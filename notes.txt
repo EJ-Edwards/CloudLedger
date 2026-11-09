@@ -12,7 +12,8 @@ stdin / stdout / stderr
 
 Why a RejectPolicy exist
 The reason why a rejectpolicy exist because of potential threat actors and how someone can always intercept the connection.
-It can also be good for rejecting unknown host files since I have added AutoAddPolicy it can just blindly accept anything without fact checking.
+It can also be good for rejecting unknown host files, AutoAddPolicy blindly accepts any unknown server without fact checking which is why I stopped using it.
 
-Why or {}
-The reason why the or {} are there because in discovery.py it will know to make an update to the server and that the data has been entered and to count it.
+A policy is a “policy class” (or instance thereof), namely some subclass of MissingHostKeyPolicy such as RejectPolicy (the default), AutoAddPolicy, WarningPolicy, or a user-created subclass..
+
+The reason why I had to make a class is because set_missing_host_key_policy() only accepts a MissingHostKeyPolicy class (or an instance of one). Paramiko calls the missing_host_key() method on it when it connects to a server whose key it does not know yet, so a plain function would never get called.
