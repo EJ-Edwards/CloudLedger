@@ -1,12 +1,21 @@
-# CLI App
+# Project Overview
 
 **The project brief is in [PROJECT.md](./PROJECT.md).** Start there.
 
-This file is yours to write. When your project works, replace everything here
-with a description of what you built: what it does, how to run it, and a usage
-example. Write it for someone who has never seen your project before.
+CloudLedger is a lightweight homelab tool that can be used for managing your homelab, servers and connecting to it so you can monitor what is going on. Here is how it works
 
-For an example of what a finished one looks like, see the
-[Task Manager Case Study](https://github.com/The-Marcy-Lab-School/swe-casestudy-1-cli-task-manager),
-which is a working Python CLI app with investigation questions to work
-through.
+
+
+# Instructions
+
+1. First you git clone it 
+2. You cd into src
+3. You run Python3 main.py
+
+There you go you got it
+
+
+
+# Warning 
+
+CloudLedger is for inventorying your own servers or are authorized to manage. It connects only to IP addresses entered by the operator and the creator and associates are not responsible for any misuse you have been warned dont be dumb.
