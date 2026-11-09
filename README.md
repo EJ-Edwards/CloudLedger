@@ -26,4 +26,4 @@ python3 main.py
 
 
 # Warning
-This is only used for servers that you own. I Eric Edwards and all associates and potential contributors with this project take no liability if you decided to go disobey your local laws you have been warned we are not responsible thank you.
+This is only used for servers that you own. I Eric Edwards and all associates and potential contributors with this project take no liability if you decided to go disobey your local laws and act like a fool thats your freewill not us you have been warned we are not responsible thank you.
