@@ -1,0 +1,6 @@
+    # rule of try: run the code, if an error occurs run the except
+    # rule of except Error: only run if a specified error occurs
+    # rule of finally: runs after try and except have run
+    # rule of function returns: the value returned by the function, if any, after try, except, and finally have executed.
+
+Notes for discovery.py 

@@ -22,10 +22,19 @@ def add_or_discover_server(inventory):
         print("A username is required.")
     password = password_prompt()
     
-    if not can_scan_server(ip, username, password):
+    client = can_scan_server(ip, username, password)
+    if client is None:
         return None
-    
+
     server = {"ip": ip}
+    try:
+        # Both server.update is used so that way it can collect information on disk info and os info before adding the server to the inventory.
+        # The client has to be used before it is closed, so the closing happens in the finally block after the info is collected.
+        server.update(disk_info(client) or {})
+        server.update(os_info(client) or {})
+    finally:
+        client.close()
+
     inventory.append(server)
     print(f"Server with IP '{ip}' added to inventory.")
     return server
@@ -35,17 +44,21 @@ def add_or_discover_server(inventory):
 # Checking if can server work
 def can_scan_server(ip, username, password):
     client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    # The reason why paramiko reject policy is there to ensure that only known and trusted host keys are accepted, preventing man-in-the-middle attacks.
+    client.load_system_host_keys()
+    # This ensures that a host key is already loaded and there arent any duplicate entries.
+    client.set_missing_host_key_policy(paramiko.RejectPolicy())
+    connected = False
 
     # rule of try: run the code, if an error occurs run the except
     # rule of except Error: only run if a specified error occurs
     # rule of finally: runs after try and except have run
     # rule of function returns: 
-
     try:
         client.connect(ip, username=username, password=password or None, timeout=5)
         print(f"Connected to {ip}.")
-        return True
+        connected = True
+        return client
     except paramiko.AuthenticationException:
         print("Wrong username or password.")
     except paramiko.SSHException as error:
@@ -53,16 +66,14 @@ def can_scan_server(ip, username, password):
     except OSError:
         print("Could not reach the server (is SSH turned on?).")
     finally:
-        client.close()
+        # On success the caller still needs the open connection, so only close it when the connection failed.
+        if not connected:
+            client.close()
 
-    return False
+    return None
 
 def password_prompt():
     return getpass("Password (press Enter if there is none): ").strip()
-
-# Adding the gigabytes 
-def gigabyte_and_bytes(gb):
-    return gb * 1024 * 1024 * 1024
 
 def os_info(client):
     # Trick to remember this std(in will mean sending inputs into a command)

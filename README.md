@@ -1,21 +1,46 @@
-# Project Overview
+# CloudLedger
 
-**The project brief is in [PROJECT.md](./PROJECT.md).** Start there.
+CloudLedger is a command-line inventory for servers you own or are authorized
+to manage. It connects to an entered IP address over SSH, reads the server's
+operating system and disk information, and saves everything in a local
+inventory file. It does not continuously monitor servers; the details are
+collected once, when the server is added.
 
-CloudLedger is a lightweight homelab tool that can be used for managing your homelab, servers and connecting to it so you can monitor what is going on. Here is how it works
+## Setup
 
+Install Python, then install the packages CloudLedger uses:
 
+```sh
+python -m pip install -r requirements.txt
+```
 
-# Instructions
+From the project root, start the app with:
 
-1. First you git clone it 
-2. You cd into src
-3. You run Python3 main.py
+```sh
+python src/main.py
+```
 
-There you go you got it
+CloudLedger rejects SSH servers whose host keys are not already trusted. Before
+adding a server for the first time, verify its SSH fingerprint with its
+administrator and add the trusted host key to your SSH `known_hosts` file.
 
+## Example
 
+When the menu appears, choose **2** to add a server. Enter its IP address,
+SSH username, and password when prompted (press Enter if the server uses an
+SSH key instead). If the SSH connection succeeds, CloudLedger reads the OS and
+disk details and saves the server to the inventory file, `CloudLedger.json`.
+Choose **1** to view the inventory or **3** to remove a server.
 
-# Warning 
+Example inventory output:
 
-CloudLedger is for inventorying your own servers or are authorized to manage. It connects only to IP addresses entered by the operator and the creator and associates are not responsible for any misuse you have been warned dont be dumb.
+```
+Server inventory:
+1. IP: 192.168.1.20
+   OS: Linux homelab 6.1.0 x86_64 GNU/Linux
+   Disk: total 100G 40G 60G 40% -
+```
+
+The OS and disk commands (`uname` and `df`) are written for Linux servers.
+
+Only connect to servers you own or are authorized to manage.

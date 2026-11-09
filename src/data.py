@@ -15,6 +15,8 @@ def show_inventory():
         print(f"{index}. IP: {item.get('ip', 'Unknown')}")
         if item.get("os"):
             print(f"   OS: {item['os']}")
+        if item.get("disk"):
+            print(f"   Disk: {item['disk']}")
 
 
 # This is for removing the server from the inventory
